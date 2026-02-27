@@ -14,7 +14,7 @@
 
 <body>
     <header>
-        
+
         <!-- place navbar here -->
     </header>
 
@@ -25,14 +25,34 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h1>Hello World</h1>
+
                 </div>
                 <div class="col-md-4">
-                    <h1>Hello World</h1>
+                    <div class="card mt-5" style="width: 18rem;">
+                        <div class="card-header">
+                            Login
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="sections/index.php">
+                                <div class="mb-3">
+                                    <label for="inputUser" class="form-label">Username</label>
+                                    <input type="text" name="username" class="form-control" id="inputUser" aria-describedby="userHelp" required>
+                                    <div id="userHelp" class="form-text text-muted">We'll never share your username with anyone else.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="inputPassword" class="form-label">Password</label>
+                                    <input type="password" minlength="5" maxlength="15" class="form-control" id="inputPassword" aria-describedby="passwordHelp" required>
+                                    <div id="passwordrHelp" class="form-text text-muted">Enter 5~15 characters.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Card footer
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                   
-                </div>
+
             </div>
         </div>
     </main>
