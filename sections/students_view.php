@@ -1,6 +1,6 @@
 <?php include('../templates/header.php'); ?>
 
-<?php include('students.php')?>
+<?php include('students.php') ?>
 
 
 <div class="container">
@@ -36,13 +36,25 @@
                             class="form-control mb-3"
                             placeholder="Example: Scrollini">
 
-                        <!-- <label for="programs" class="form-label">Programs</label>
-                        <select name="program" id="programs" class="form-select mb-3">
+                        <label class="form-label">Programs</label>
+                        <!-- <select multiple name="program" id="programs" class="form-select mb-3">
                             <option selected>Choose a program</option>
                             <option value="1">Program 1</option>
                             <option value="2">Program 2</option>
                             <option value="3">Program 3</option>
                         </select> -->
+                        <?php foreach($programList as $program){?>
+                        <div class="form-check">
+                            <input name="programs[]"
+                             id="program<?= $program["id"]?>Check" 
+                             type="checkbox" value="<?= $program["id"]?>" 
+                             class="form-check-input">
+                            <label for="program<?= $program["id"]?>Check" class="form-check-label"><?= $program["id"] ?> - <?= $program["program_name"]?></label>
+                            
+                        </div>
+                        <?php } ?>
+                       
+
                     </div>
                     <div class="card-footer">
                         <div class="btn-group">
@@ -60,26 +72,29 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Last Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($students as $student){ ?>
-                    <tr>
-                        <td><?= $student["id"] ?></td>
-                        <td><?= $student["name"] ?></td>
-                        <td><?= $student["last_name"] ?></td>
-                        <td>
-                            <form action="" method="POST">
-                                <input type="hidden" value="<?= $student["id"]?>" name="id" />
-                                <button name="action" value="select" class="btn btn-primary" >
-                                    Select
-                                </button> 
-                            </form>
-                    </td>
-                </tr>
-                <?php }?>
+                    <?php foreach ($students as $student) { ?>
+                        <tr>
+                            <td><?= $student["id"] ?></td>
+                            <td><?= $student["name"] ?> <?= $student["last_name"] ?>
+                            <br/>
+                            <?php foreach($student["programs"] as $program){?>
+                                - <a href="#"><?php echo $program["program_name"]?></a></br>
+                              <?php  }?>
+                        </td>
+                            <td>
+                                <form action="" method="POST">
+                                    <input type="hidden" value="<?= $student["id"] ?>" name="id" />
+                                    <button name="action" value="select" class="btn btn-primary">
+                                        Select
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

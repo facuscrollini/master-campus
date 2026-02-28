@@ -1,25 +1,40 @@
 <?php
-   include_once '../config/bd.php';
-$conexionBD= BaseData::crearInstancia();
-   ?>
+include_once '../config/bd.php';
+$conexionBD = BaseData::crearInstancia();
+?>
 
 <?php
-$id = isset($_POST["id"]) ? $_POST["id"]: "";
-$name = isset( $_POST["name"]) ? $_POST["name"]: "";
-$last_name = isset($_POST["last_name"]) ? $_POST["last_name"]: "";
-$action = isset($_POST["action"]) ? $_POST["action"]: "";
+$id = isset($_POST["id"]) ? $_POST["id"] : "";
+$name = isset($_POST["name"]) ? $_POST["name"] : "";
+$last_name = isset($_POST["last_name"]) ? $_POST["last_name"] : "";
 
 
+$programs = isset($_POST["programs"]) ? $_POST["programs"] : "";
+$action = isset($_POST["action"]) ? $_POST["action"] : "";
 
 
-if($action != ""){
-    switch($action){
+if ($action != "") {
+    switch ($action) {
         case 'add':
             $sql = 'INSERT INTO students (name, last_name) VALUES(:name, :last_name)';
             $request = $conexionBD->prepare($sql);
             $request->bindParam(':name', $name);
             $request->bindParam(':last_name', $last_name);
             $request->execute();
+            $student_id = $conexionBD->lastInsertId();
+
+
+
+            foreach($programs as $program){
+                $sql = 'INSERT INTO student_program (id_alumno, id_program) VALUES(:id_student, :id_program)';
+                $request = $conexionBD->prepare($sql);
+                $request->bindParam(':id_student', $student_id);
+                $request->bindParam(':id_program', $program);
+                $request->execute();
+
+            }
+
+
             break;
         case 'edit':
             $sql = 'UPDATE students SET name=:name, last_name=:last_name  WHERE id=:id';
@@ -29,18 +44,18 @@ if($action != ""){
             $request->bindParam(':last_name', $last_name);
             $request->execute();
 
-            $id= "";
-            $name= "";
-            $last_name= "";
+            $id = "";
+            $name = "";
+            $last_name = "";
             break;
         case 'delete':
             $sql = 'DELETE FROM students WHERE id=:id';
             $request = $conexionBD->prepare($sql);
             $request->bindParam(':id', $id);
-            $request->execute(); 
+            $request->execute();
             $name = "";
             $last_name = "";
-            $id = "";   
+            $id = "";
             break;
         case 'select':
             $sql = 'SELECT * FROM students WHERE id=:id';
@@ -52,7 +67,6 @@ if($action != ""){
             $last_name = $student["last_name"];
             print_r($student);
             break;
-      
     }
 }
 
@@ -63,5 +77,23 @@ $sql = "SELECT * FROM students";
 $request = $conexionBD->prepare($sql);
 $request->execute();
 $students = $request->fetchAll();
+
+$sqlProgramList = "SELECT * FROM programs";
+
+$requestProgramList = $conexionBD->prepare($sqlProgramList);
+$requestProgramList->execute();
+$programList = $requestProgramList->fetchAll();
+
+foreach ($students as $key => $student) {
+
+    $sql = 'SELECT * FROM programs WHERE id IN (SELECT id_program FROM student_program WHERE id_alumno=:id_student)';
+    $request = $conexionBD->prepare($sql);
+    $request->bindParam(':id_student', $student["id"]);
+    $request->execute();
+    $studentPrograms = $request->fetchAll();
+    $students[$key]['programs'] = $studentPrograms;
+}
+
+
 
 ?>
