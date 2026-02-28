@@ -16,12 +16,14 @@
                         <label for="idInput" class="form-label">ID</label>
                         <input id="idInput"
                             name="id"
-                            type="text"
+                            value="<?= $id ?>"
+                            type="number"
                             class="form-control mb-3"
                             placeholder="Example: 5">
                         <label for="nameInput" class="form-label">Name</label>
                         <input id="nameInput"
                             name="name"
+                            value="<?= $name ?>"
                             type="text"
                             class="form-control mb-3"
                             placeholder="Example: Facundo">
@@ -29,6 +31,7 @@
                         <label for="nameInput" class="form-label">Last Name</label>
                         <input id="lastNameInput"
                             name="last_name"
+                            value="<?= $last_name ?>"
                             type="text"
                             class="form-control mb-3"
                             placeholder="Example: Scrollini">
@@ -62,19 +65,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($students as $student){ ?>
                     <tr>
-                        <td>1</td>
-                        <td>Facundo</td>
-                        <td>Scrollini</td>
+                        <td><?= $student["id"] ?></td>
+                        <td><?= $student["name"] ?></td>
+                        <td><?= $student["last_name"] ?></td>
                         <td>
                             <form action="" method="POST">
-                                <input type="hidden" value="1" name="id" />
-                                <button class="btn btn-primary" >
+                                <input type="hidden" value="<?= $student["id"]?>" name="id" />
+                                <button name="action" value="select" class="btn btn-primary" >
                                     Select
                                 </button> 
                             </form>
                     </td>
-                    </tr>
+                </tr>
+                <?php }?>
                 </tbody>
             </table>
         </div>

@@ -1,3 +1,7 @@
+ <?php
+    include_once '../config/bd.php';
+$conexionBD= BaseData::crearInstancia();
+    ?>
 <?php 
 
 
