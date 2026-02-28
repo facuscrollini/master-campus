@@ -14,6 +14,13 @@ class BaseData{
 
       return self::$instance;  
     }
+
+    // public static function ejecutarConsulta(string $requestText){
+    //         $bdContection = self::crearInstancia();
+    //         $request = $bdContection->prepare($requestText);
+    //         $request->execute();
+    //         return $request;
+    // }
 }
 
 ?>

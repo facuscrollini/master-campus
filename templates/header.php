@@ -31,13 +31,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="programs_view.php">Programs</a>
                     </li>
-                  
+
                     <li class="nav-item">
                         <a class="nav-link" href="close.php">Logout</a>
                     </li>
                 </ul>
-                
+
             </div>
         </div>
     </nav>
-    
+    <?php
+    include_once '../config/bd.php';
+    $conexionBD = BaseData::crearInstancia();
+    ?>
