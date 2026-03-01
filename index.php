@@ -1,3 +1,23 @@
+<?php
+
+session_start();
+if ($_POST) {
+    $username = isset($_POST["username"]) ? $_POST["username"] : "";
+    $password = isset($_POST["password"]) ? $_POST["password"] : "";
+
+    $message = "Bad username or password";
+
+
+    if ($username == "facuscrollini" && $password == "123456") {
+        $_SESSION["username"] = $username;
+        header("Location: sections/index.php");
+    }
+}
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -33,7 +53,12 @@
                             Login
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="sections/index.php">
+                            <?php if (isset($message)) { ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= $message ?>
+                                </div>
+                            <?php } ?>
+                            <form method="POST" action="">
                                 <div class="mb-3">
                                     <label for="inputUser" class="form-label">Username</label>
                                     <input type="text" name="username" class="form-control" id="inputUser" aria-describedby="userHelp" required>
@@ -41,7 +66,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="inputPassword" class="form-label">Password</label>
-                                    <input type="password" minlength="5" maxlength="15" class="form-control" id="inputPassword" aria-describedby="passwordHelp" required>
+                                    <input name="password" type="password" minlength="5" maxlength="15" class="form-control" id="inputPassword" aria-describedby="passwordHelp" required>
                                     <div id="passwordrHelp" class="form-text text-muted">Enter 5~15 characters.</div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Login</button>

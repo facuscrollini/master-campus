@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <div class="row mt-5">
+    <div class="row">
         <div class="col-md-5">
             <form action="" method="POST">
                 <div class="card">
@@ -37,15 +37,19 @@
                             placeholder="Example: Scrollini">
 
                         <label class="form-label">Programs</label>
-                        <!-- <select multiple name="program" id="programs" class="form-select mb-3">
-                            <option selected>Choose a program</option>
-                            <option value="1">Program 1</option>
-                            <option value="2">Program 2</option>
-                            <option value="3">Program 3</option>
-                        </select> -->
+               
                         <?php foreach($programList as $program){?>
                         <div class="form-check">
                             <input name="programs[]"
+                            <?php 
+                            
+                           if(!empty($programsArray)):
+                            if(in_array($program["id"], $programsArray)):
+                                echo "checked";
+                            endif;
+                            endif;
+                            
+                            ?>
                              id="program<?= $program["id"]?>Check" 
                              type="checkbox" value="<?= $program["id"]?>" 
                              class="form-check-input">
@@ -82,7 +86,11 @@
                             <td><?= $student["name"] ?> <?= $student["last_name"] ?>
                             <br/>
                             <?php foreach($student["programs"] as $program){?>
-                                - <a href="#"><?php echo $program["program_name"]?></a></br>
+                                - <a href="certified.php?program_id=<?= $program["id"] ?>&student_id=<?= $student["id"]?>">
+                                    <i class="fa-solid fa-file-pdf text-danger"></i>
+                                    <?php echo $program["program_name"]?>
+                                </a>
+                                </br>
                               <?php  }?>
                         </td>
                             <td>
